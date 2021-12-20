@@ -8,6 +8,7 @@ def init_logger(
     name = 'default_logger',
     log_path = '/var/log/slg/default_location.log',
     log_level = logging.INFO,
+    stream_log_level = logging.DEBUG,
     formatter_str = '%(asctime)s | %(levelname)-8s | Line %(lineno)-4s | %(pathname)s | %(message)s'
 ) -> logging.Logger:
     '''
@@ -28,7 +29,7 @@ def init_logger(
         stream_formatter = Formatter(f'------- Log message saved to {log_path} ------- \n' + formatter_str, datefmt='%Y-%m-%d %H:%M:%S')
         stream_handler.setFormatter(stream_formatter)
 
-        stream_handler.setLevel(log_level)
+        stream_handler.setLevel(stream_log_level)
         logger.addHandler(stream_handler)
 
         logger.setLevel(log_level)

@@ -4,7 +4,7 @@ import runpy
 from setuptools import setup, find_packages
 from slg_setup import get_script_files
 
-PACKAGE_NAME = "package-boilerplate"
+PACKAGE_NAME = "logger-slg"
 version_meta = runpy.run_path("./version.py")
 VERSION = version_meta["__version__"]
 

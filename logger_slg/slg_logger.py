@@ -9,7 +9,9 @@ def init_logger(
     log_path = '/var/log/slg/default_location.log',
     log_level = logging.INFO,
     stream_log_level = logging.DEBUG,
-    formatter_str = '%(asctime)s | %(levelname)-8s | Line %(lineno)-4s | %(pathname)s | %(message)s'
+    formatter_str = '%(asctime)s | %(levelname)-8s | Line %(lineno)-4s | %(pathname)s | %(message)s',
+    max_bytes=10000000,
+    backup_count=5
 ) -> logging.Logger:
     '''
     It's recommended to set name = __name__ as the name parameter when calling this function in order to get the logger name to be the same as the file's name.
@@ -19,7 +21,7 @@ def init_logger(
 
     try:
         logger = logging.getLogger(name)
-        file_handler = RotatingFileHandler(log_path, maxBytes=10000000, backupCount=5)
+        file_handler = RotatingFileHandler(log_path, maxBytes=max_bytes, backupCount=backup_count)
         stream_handler = StreamHandler()
 
         file_formatter = Formatter(formatter_str, datefmt='%Y-%m-%d %H:%M:%S')

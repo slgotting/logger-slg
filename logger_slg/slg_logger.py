@@ -17,7 +17,6 @@ def init_logger(
     It's recommended to set name = __name__ as the name parameter when calling this function in order to get the logger name to be the same as the file's name.
 
     It's also advised to set the log_path to "/var/log/slg/{__file__.split("/")[-1]}.log" when calling from a script so you don't log to a default file but also one relevant to the script.
-
     '''
 
     try:

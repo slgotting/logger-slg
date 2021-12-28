@@ -2,6 +2,7 @@ import os
 import logging
 from logging import Formatter, StreamHandler
 from logging.handlers import RotatingFileHandler
+import traceback
 
 
 def init_logger(
@@ -46,3 +47,6 @@ def init_logger(
         print(f'\nsudo mkdir -p {os.path.dirname(log_path)}')
         print(f'sudo chown -R $USER:$USER {os.path.dirname(log_path)}')
         exit(0)
+    except:
+        print('Unhandled error occured, as described below:\n\n')
+        print(traceback.format_exc())

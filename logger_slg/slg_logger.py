@@ -50,3 +50,16 @@ def init_logger(
     except:
         print('Unhandled error occured, as described below:\n\n')
         print(traceback.format_exc())
+
+def generate_cron_log_absolute_filepath(file_, location="global"):
+    # Pass in __file__ as the argument every time
+
+    abs_path = os.path.abspath(file_)
+
+    if location == "global":
+        log_path = "/var/log/slg/cron/"
+    elif location == "local":
+        log_path = abs_path.split('cron')[0] + 'cron/logs/'
+
+    filename = abs_path.split('cron')[1][1:].replace('/', '.') + '.log'
+    return log_path + filename

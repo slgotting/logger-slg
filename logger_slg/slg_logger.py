@@ -5,6 +5,7 @@ from logging import Formatter, StreamHandler
 from logging.handlers import RotatingFileHandler
 import traceback
 import subprocess
+import getpass
 
 
 
@@ -41,8 +42,8 @@ def init_logger(
             subprocess.run(f'mkdir -p {write_directory}', shell=True)
         else:
             username = input('The write directory does not exist and is write-protected, please enter the username this directory should belong to: ')
-            password = input('Now please enter the sudo password so we can create the directory in write protected directory: ')
-            subprocess.run(f'echo {password} | sudo -S -u {username} mkdir -p {write_directory}', shell=True)
+            password = getpass.getpass('Now please enter the sudo password so we can create the directory in write protected directory: ')
+            subprocess.run(f'echo {password} | sudo -S mkdir -p {write_directory} 2>&1 /dev/null && echo {password} | sudo -S chown -R {username}:{username} {write_directory} 2>&1 /dev/null', shell=True)
 
     try:
         logger = logging.getLogger(name)

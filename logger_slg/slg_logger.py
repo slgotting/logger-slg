@@ -1,8 +1,11 @@
+from asyncore import write
 import os
 import logging
 from logging import Formatter, StreamHandler
 from logging.handlers import RotatingFileHandler
 import traceback
+import subprocess
+
 
 
 def init_logger(
@@ -19,6 +22,27 @@ def init_logger(
 
     It's also advised to set the log_path to "/var/log/slg/{__file__.split("/")[-1]}.log" when calling from a script so you don't log to a default file but also one relevant to the script.
     '''
+    def find_existing_dir(directory_path):
+        '''Finds the lowest directory that actually exists, to check if we have write access to said dir'''
+        if os.path.isdir(directory_path):
+            return directory_path
+        while directory_path:
+            directory_path = '/'.join(directory_path.split('/')[:-1])
+            if os.path.isdir(directory_path):
+                return directory_path
+        return '/'
+
+    write_directory = os.path.dirname(log_path)
+
+    if not os.path.isdir(write_directory):
+        lowest_real_directory = find_existing_dir(write_directory)
+        # checks if we have write access to this lowest directory
+        if os.access(lowest_real_directory, os.W_OK):
+            subprocess.run(f'mkdir -p {write_directory}', shell=True)
+        else:
+            username = input('The write directory does not exist and is write-protected, please enter the username this directory should belong to: ')
+            password = input('Now please enter the sudo password so we can create the directory in write protected directory: ')
+            subprocess.run(f'echo {password} | sudo -S -u {username} mkdir -p {write_directory}', shell=True)
 
     try:
         logger = logging.getLogger(name)

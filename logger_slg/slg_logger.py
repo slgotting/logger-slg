@@ -30,8 +30,9 @@ def init_logger(
 
     It's also advised to set the log_path to "/var/log/slg/{__file__.split("/")[-1]}.log" when calling from a script so you don't log to a default file but also one relevant to the script.
     '''
-    log_level = LOG_LEVEL_MAP[log_level]
-    stream_log_level = LOG_LEVEL_MAP[stream_log_level]
+    if type(log_level) == str:
+        log_level = LOG_LEVEL_MAP[log_level]
+        stream_log_level = LOG_LEVEL_MAP[stream_log_level]
 
     def find_existing_dir(directory_path):
         '''Finds the lowest directory that actually exists, to check if we have write access to said dir'''

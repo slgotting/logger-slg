@@ -7,13 +7,20 @@ import traceback
 import subprocess
 import getpass
 
+LOG_LEVEL_MAP = {
+    'DEBUG': logging.DEBUG,
+    'INFO': logging.INFO,
+    'WARNING': logging.WARNING,
+    'ERROR': logging.ERROR,
+    'CRITICAL': logging.CRITICAL
+}
 
 
 def init_logger(
     name = 'default_logger',
     log_path = '/var/log/slg/default_location.log',
-    log_level = logging.INFO,
-    stream_log_level = logging.DEBUG,
+    log_level = 'INFO',
+    stream_log_level = 'DEBUG',
     formatter_str = '%(asctime)s | %(levelname)-8s | Line %(lineno)-4s | %(pathname)s | %(message)s',
     max_bytes=10000000,
     backup_count=5
@@ -23,6 +30,9 @@ def init_logger(
 
     It's also advised to set the log_path to "/var/log/slg/{__file__.split("/")[-1]}.log" when calling from a script so you don't log to a default file but also one relevant to the script.
     '''
+    log_level = LOG_LEVEL_MAP[log_level]
+    stream_log_level = LOG_LEVEL_MAP[stream_log_level]
+
     def find_existing_dir(directory_path):
         '''Finds the lowest directory that actually exists, to check if we have write access to said dir'''
         if os.path.isdir(directory_path):

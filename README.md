@@ -1,12 +1,11 @@
-# Python Package Boilerplate
-
-This is an minimal example of how to publish a python package.
-
-You can follow along with the [guide](https://nrempel.com/how-to-publish-a-python-package-to-pypi).
+from logger_slg import init_logger
 
 
-### WARNING: do not run apply_custom_naming.py from another directory. It will delete things (potentially).
-### INFO: If no script name is entered, it will delete both the scripts directory and scripts line from setup.py
-To apply a custom name to your package, run:
-
-python3 apply_custom_naming.py
+init_logger(name = 'default_logger',
+    log_path = '/var/log/slg/default_location.log',
+    log_level = 'INFO',
+    stream_log_level = 'DEBUG',
+    formatter_str = '%(asctime)s | %(levelname)-8s | Line %(lineno)-4s | %(pathname)s | %(message)s',
+    max_bytes=10000000,
+    backup_count=5
+)

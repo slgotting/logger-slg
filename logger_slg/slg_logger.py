@@ -32,6 +32,7 @@ def init_logger(
     '''
     if type(log_level) == str:
         log_level = LOG_LEVEL_MAP[log_level]
+    if type(stream_log_level) == str:
         stream_log_level = LOG_LEVEL_MAP[stream_log_level]
 
     def find_existing_dir(directory_path):

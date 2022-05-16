@@ -1,3 +1,4 @@
+```
 from logger_slg import init_logger
 
 
@@ -9,3 +10,4 @@ init_logger(name = 'default_logger',
     max_bytes=10000000,  
     backup_count=5  
 )  
+```
